@@ -8,6 +8,9 @@
 #include <QBoxLayout>
 #include <QFont>
 
+#include "include/settings.h"
+#include "include/loading.h"
+
 class Main_menu : public QWidget
 {
     Q_OBJECT

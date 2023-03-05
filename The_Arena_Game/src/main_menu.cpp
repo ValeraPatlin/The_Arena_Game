@@ -3,6 +3,10 @@
 Main_menu::Main_menu(QWidget *parent)
     : QWidget(parent)
 {
+    //
+    Settings* settings_window = new Settings;
+    Loading* loading_window = new Loading;
+
     setWindowTitle("Арена");
     setFixedSize(650, 500);
 
@@ -30,10 +34,11 @@ Main_menu::Main_menu(QWidget *parent)
 
 //connect   _________
     connect(start, &QPushButton::clicked, [this](){
+        //settings_window->settings_slot();
         this->close();
     });
-
-
+    connect(loading, SIGNAL(clicked()), loading_window, SLOT(loading_slot()));
+    connect(settings, SIGNAL(clicked()), settings_window, SLOT(settings_slot()));
     connect(quit, SIGNAL(clicked()), qApp, SLOT(quit()));
 
 
