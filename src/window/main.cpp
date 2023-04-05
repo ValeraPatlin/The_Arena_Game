@@ -1,6 +1,10 @@
-#include "include/main_menu.h"
+#include "include/window/main_menu.h"
+#include "include/creature/player.h"
+
 
 #include <QApplication>
+
+Player* player = new Player();
 
 int main(int argc, char *argv[])
 {

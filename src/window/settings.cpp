@@ -1,7 +1,6 @@
-#include "include/settings.h"
+#include "include/window/settings.h"
 
-int num = 0;
-QString text;
+#include <QDebug>
 
 Settings::Settings(QWidget *parent)
     : QWidget{parent}
@@ -15,20 +14,28 @@ Settings::Settings(QWidget *parent)
 //button  _____________
     QPushButton* undo = new QPushButton("Отмена");
     QPushButton* apply = new QPushButton("Применить");
-    QPushButton* save = new QPushButton("Созранить");
+    QPushButton* save = new QPushButton("Сохранить");
 
-//connect
+//connect button
     connect(undo, SIGNAL(clicked()), SLOT(close()));
 
 //Radio Button
-    QRadioButton* rus = new QRadioButton("&рус");
-    QRadioButton* eng = new QRadioButton("&eng");
+    rus = new QRadioButton("&рус");
+    eng = new QRadioButton("&eng");
+
+    rus->setChecked(true);
+
+//connect radio button
+    connect(rus, SIGNAL(clicked()), SLOT(language_slot()));
+    connect(eng, SIGNAL(clicked()), SLOT(language_slot()));
 
 //Grouo Box
-    QGroupBox* language_selection = new QGroupBox(text);
+    language_selection = new QGroupBox();
     QHBoxLayout* language_box = new QHBoxLayout;
     language_box->addWidget(rus);
     language_box->addWidget(eng);
+
+    language_selection->setTitle("test");   //изменить поле при переводе
 
     language_selection->setLayout(language_box);
 
@@ -52,4 +59,19 @@ Settings::Settings(QWidget *parent)
 void Settings::settings_slot()
 {
     this->show();
+}
+
+void Settings::language_slot()
+{
+    QString str = ((QRadioButton*)sender())->text();
+
+    if (str == "&рус")
+    {
+        language_selection->setTitle("Выбор языка");
+
+    }
+    else
+    {
+        language_selection->setTitle("Language selection");
+    }
 }

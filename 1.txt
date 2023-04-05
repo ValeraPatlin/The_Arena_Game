@@ -1,0 +1,40 @@
+//connect parameters  -------------------
+    //power - сила
+    connect(power, QOverload<int>::of(&QSpinBox::valueChanged), [power, &parameters_point]()
+            {
+                if (parameters_point > 0)
+                {
+                    qDebug() << "click2------" << power->value() << parameters_point;
+                    --parameters_point;
+                }
+                qDebug() << "click" << power->value() << parameters_point;
+
+            });
+
+    //dexterity - ловкость
+    connect(dexterity, QOverload<int>::of(&QSpinBox::valueChanged), [dexterity, parameters_point]()
+            {
+                if (parameters_point != 0)
+                {
+
+                }
+                qDebug() << "click" << dexterity->value();
+            });
+
+    //endurance - выносливость
+    connect(endurance, QOverload<int>::of(&QSpinBox::valueChanged), [endurance, parameters_point]()
+            {
+                qDebug() << "click" << endurance->value();
+            });
+
+    //intelligence - интелект
+    connect(intelligence, QOverload<int>::of(&QSpinBox::valueChanged), [intelligence, parameters_point]()
+            {
+                qDebug() << "click" << intelligence->value();
+            });
+
+    //spirit - дух
+    connect(spirit, QOverload<int>::of(&QSpinBox::valueChanged), [spirit, parameters_point]()
+            {
+                qDebug() << "click" << spirit->value();
+            });

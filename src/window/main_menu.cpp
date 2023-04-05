@@ -1,4 +1,4 @@
-#include "include/main_menu.h"
+#include "include/window/main_menu.h"
 
 Main_menu::Main_menu(QWidget *parent)
     : QWidget(parent)
@@ -6,15 +6,16 @@ Main_menu::Main_menu(QWidget *parent)
     //
     Settings* settings_window = new Settings;
     Loading* loading_window = new Loading;
+    Character_creation_menu* character_creation_window = new Character_creation_menu;
 
     setWindowTitle("Арена");
     setFixedSize(650, 500);
 
 //button ___________
-    QPushButton* start = new QPushButton("Начать");
-    QPushButton* loading = new QPushButton("Загрузить");
-    QPushButton* settings = new QPushButton("Насторйки");
-    QPushButton* quit = new QPushButton("Выход");
+    start = new QPushButton("Начать");
+    loading = new QPushButton("Загрузить");
+    settings = new QPushButton("Настройки");
+    quit = new QPushButton("Выход");
 
 //size button   ______
     QSize size_button(170, 50);
@@ -33,8 +34,8 @@ Main_menu::Main_menu(QWidget *parent)
     quit->setFont(font);
 
 //connect   _________
-    connect(start, &QPushButton::clicked, [this](){
-        //settings_window->settings_slot();
+    connect(start, &QPushButton::clicked, [this, character_creation_window](){
+        character_creation_window->start_menu_character_creation_slot();
         this->close();
     });
     connect(loading, SIGNAL(clicked()), loading_window, SLOT(loading_slot()));

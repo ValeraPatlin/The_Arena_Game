@@ -1,5 +1,4 @@
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#pragma once
 
 #include <QWidget>
 #include <QPushButton>
@@ -10,28 +9,29 @@
 #include <QRadioButton>
 #include <QString>
 
-extern int num;
-
-#if num > 0
-
-QString text = "eng";
-
-#else
-
-//extern QString text = "рус";
-
-#endif
+/*
+ * Меню параметров игры
+ *
+ */
 
 
 class Settings : public QWidget
 {
     Q_OBJECT
+    QGroupBox* language_selection;
+    QRadioButton* rus;
+    QRadioButton* eng;
+
+
+
 public:
     explicit Settings(QWidget *parent = nullptr);
 
 public slots:
     void settings_slot();
 
+private slots:
+    void language_slot();
+
 };
 
-#endif // SETTINGS_H

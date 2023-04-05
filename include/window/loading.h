@@ -1,7 +1,11 @@
-#ifndef LOADING_H
-#define LOADING_H
+#pragma once
 
 #include <QWidget>
+
+/*
+ *Меню загрузок игры
+ *
+ */
 
 class Loading : public QWidget
 {
@@ -14,4 +18,4 @@ public slots:
 
 };
 
-#endif // LOADING_H
+
