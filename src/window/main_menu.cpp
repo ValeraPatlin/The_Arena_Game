@@ -3,7 +3,16 @@
 Main_menu::Main_menu(QWidget *parent)
     : QWidget(parent)
 {
-    //
+//-------------------------------------
+    //версия игры
+    QLabel* version = new QLabel("version 0.0.2.1");
+    QHBoxLayout* ver_box = new QHBoxLayout();
+    ver_box->addSpacing(550);
+    ver_box->addWidget(version);
+
+//----------------------------------
+
+    //window
     Settings* settings_window = new Settings;
     Loading* loading_window = new Loading;
     Character_creation_menu* character_creation_window = new Character_creation_menu;
@@ -42,8 +51,8 @@ Main_menu::Main_menu(QWidget *parent)
     connect(settings, SIGNAL(clicked()), settings_window, SLOT(settings_slot()));
     connect(quit, SIGNAL(clicked()), qApp, SLOT(quit()));
 
-
-    QLabel* heading = new QLabel("Арена");
+//-----------------
+    QLabel* heading = new QLabel("Арена"); //переработать
 
 
 // layout setup    ____________
@@ -70,6 +79,7 @@ Main_menu::Main_menu(QWidget *parent)
     main_layout->addSpacing(100);
     main_layout->addLayout(center_layout);
     main_layout->addSpacing(200);
+    main_layout->addLayout(ver_box);
 
     setLayout(main_layout);
 }

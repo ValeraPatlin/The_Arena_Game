@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/Icon_window">
+        <file>icon/win_error.bmp</file>
+    </qresource>
+</RCC>

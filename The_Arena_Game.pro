@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/create_parameters.cpp \
     src/creature/player.cpp \
     src/creature/creature.cpp \
     src/window/character_creation_menu.cpp \
@@ -16,18 +17,24 @@ SOURCES += \
     src/window/loading.cpp \
     src/window/main.cpp \
     src/window/settings.cpp \
-    src/window/main_menu.cpp
+    src/window/main_menu.cpp \
+    src/widget_info.cpp
 
 HEADERS += \
+    include/create_parameters.h \
     include/creature/creature.h \
     include/window/character_creation_menu.h \
     configuration.h \  #---
     include/window/main_menu.h \
     include/window/settings.h \
     include/window/loading.h \
-    include/creature/player.h
+    include/creature/player.h \
+    include/widget_info.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Icon_window.qrc

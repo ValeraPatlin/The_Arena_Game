@@ -10,31 +10,86 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     setWindowTitle("Арена");
     setFixedSize(650, 500);
 
-    str_parameters_point = new QLabel;
-    str_parameters_point->setNum(parameters_point);
+//портрет и имя
+    help = new QLabel();
+    help->setText("Укажите пол и имя персонажа");
+
+    //portrait
+    player_portrait = new QLabel();
+
+    //buttons for portrait
+    QPushButton* right = new QPushButton(">");
+    QPushButton* left = new QPushButton("<");
+
+    //sex
+    men = new QRadioButton("&Мужчина");
+    women = new QRadioButton("&Женщина");
+    men->setChecked(true);
+
+    //name
+    player_name = new QLineEdit();
+    player_name->setMaxLength(20);
+    player_name->setClearButtonEnabled(true);
+    player_name->setPlaceholderText("Enter a character name");
+
+    connect(player_name, &QLineEdit::textEdited, [this]()
+            {
+                player->name = player_name->text();
+            });
 
 //button
     QPushButton* start = new QPushButton("Старт");
     QPushButton* quit = new QPushButton("Выход");
 
     //connect
-    //connect(bt, SIGNAL(clicked()), SLOT());
+    connect(start, SIGNAL(clicked()), SLOT(start_slot()));
     connect(quit, SIGNAL(clicked()), qApp, SLOT(quit()));
-
 
 //Fond   ___________
     QFont font;
     font.setPixelSize(16);
-    str_parameters_point->setFont(font);
     start->setFont(font);
     quit->setFont(font);
+    right->setFont(font);
+    left->setFont(font);
+    men->setFont(font);
+    women->setFont(font);
+    player_name->setFont(font);
+    help->setFont(font);
 
-//layout setup    ____________
-    //портрет и имя
+//layout setup    _________________________________________
+//портрет и имя
     QGroupBox* portrait_box = new QGroupBox();
 
+//portait -------------------------------------
+    //button
+    QHBoxLayout* portait_button = new QHBoxLayout();
+    portait_button->addWidget(left);
+    portait_button->addWidget(right);
 
-    //параметры персонажа
+    QVBoxLayout* portait = new QVBoxLayout();
+    portait->addWidget(player_portrait);
+    portait->addLayout(portait_button);
+
+    //name and sex
+    QHBoxLayout* sex_box = new QHBoxLayout();
+    sex_box->addWidget(men);
+    sex_box->addWidget(women);
+
+    QVBoxLayout* name_box = new QVBoxLayout();
+    name_box->addWidget(help);
+    name_box->addLayout(sex_box);
+    name_box->addSpacing(20);
+    name_box->addWidget(player_name);
+
+    //portait box
+    QHBoxLayout* main_portait_box = new QHBoxLayout();
+    main_portait_box->addLayout(portait);
+    main_portait_box->addLayout(name_box);
+
+    portrait_box->setLayout(main_portait_box);
+
+//параметры персонажа ----------------
     /*
      * parameters
      *
@@ -46,20 +101,13 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
      *
      */
     QGroupBox* parameters_box = new QGroupBox("Параметры персонажа");
-    QFormLayout* form = new QFormLayout;
-
-    form->addRow("осталось очков:", str_parameters_point);
-    form->addRow("сила:", create_spin_box(player->power));
-    form->addRow("ловкость:", create_spin_box(player->dexterity));
-    form->addRow("выносливость:", create_spin_box(player->endurance));
-    form->addRow("интелект:", create_spin_box(player->intelligence));
-    form->addRow("дух:", create_spin_box(player->spirit));
-    form->setSpacing(10);
-
-    parameters_box->setLayout(form);
+    parameters_box->setFont(font);  //font
+    parameters_box->setLayout(create_parameters(parameters_point));
 
     //навыки и умения
     QGroupBox* skills_box = new QGroupBox("Навыки персонажа");
+
+    skills_box->setFont(font);  //font
 
     //паремметры и навыки
     QGroupBox* parem_skills_box = new QGroupBox("Парамметры и навыки");
@@ -67,9 +115,10 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     group_box->addWidget(parameters_box);
     group_box->addWidget(skills_box);
 
+    parem_skills_box->setFont(font);
     parem_skills_box->setLayout(group_box);
 
-    //button
+//button for start  ------------------------------
     QHBoxLayout* button_box = new QHBoxLayout();
     button_box->addSpacing(100);
     button_box->addWidget(start);
@@ -77,8 +126,8 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     button_box->addWidget(quit);
     button_box->addSpacing(100);
 
+//main layout -----------------------------------
     QVBoxLayout* main_layout = new QVBoxLayout;
-    //
     main_layout->addWidget(portrait_box);
     main_layout->addWidget(parem_skills_box);
     main_layout->addLayout(button_box);
@@ -91,67 +140,23 @@ void Character_creation_menu::start_menu_character_creation_slot()
     this->show();
 }
 
-//--------------------------------------------------------------
-QHBoxLayout* Character_creation_menu::create_spin_box(int& param)
+void Character_creation_menu::start_slot()
 {
-    QSpinBox* result = new QSpinBox;
-
-    result->setButtonSymbols(QAbstractSpinBox::NoButtons);
-    result->setMaximum(20);
-    result->setFixedSize(25, 25);
-    result->setReadOnly(true);
-
-    QPushButton* plus = new QPushButton("+");
-    QPushButton* minus = new QPushButton("-");
-
-    plus->setFixedSize(25, 30);
-    minus->setFixedSize(25, 30);
-
-//Font
-    QFont font;
-    font.setPixelSize(16);
-    result->setFont(font);
-    plus->setFont(font);
-    minus->setFont(font);
-
-//conntect
-    connect(plus, &QPushButton::clicked, [this, result, &param]()
-            {
-                int num = result->value();
-                if (parameters_point != 0)
-                {
-                    result->setValue(++num);
-                    --parameters_point;
-                    str_parameters_point->setNum(parameters_point);
-                    param = result->value();
-
-                    //test
-                    player->print();
-                }
-            });
-    connect(minus, &QPushButton::clicked, [this, result, &param]()
-            {
-                int num = result->value();
-                if (num != 0)
-                {
-                    result->setValue(--num);
-                    ++parameters_point;
-                    str_parameters_point->setNum(parameters_point);
-                    param = result->value();
-                }
-            });
-
-    QHBoxLayout* h_box = new QHBoxLayout;
-
-    h_box->addWidget(minus);
-    h_box->addWidget(result);
-    h_box->addWidget(plus);
-
-    return h_box;
+    if (player_name->text() != "")
+    {
+        qDebug() << "start";
+    }
+    else
+    {
+        help->setText("Укажите имя персонажа!");
+        info_widget("Укажите имя персонажа!");
+    }
 }
 
 
-void Character_creation_menu::parameters_player_slot()
+
+
+void Character_creation_menu::parameters_player_slot() // удалить
 {
     QString str = ((QPushButton*)sender())->text();
 
