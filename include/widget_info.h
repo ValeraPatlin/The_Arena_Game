@@ -8,4 +8,10 @@
 #include <QPushButton>
 #include <QBoxLayout>
 
+/*
+ * Функции для вывода окна информации
+ *
+ */
+
+
 void info_widget(QString text);

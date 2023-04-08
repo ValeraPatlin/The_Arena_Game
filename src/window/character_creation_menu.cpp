@@ -2,13 +2,25 @@
 
 #include <QDebug>
 
-extern Player* player;
-
 Character_creation_menu::Character_creation_menu(QWidget *parent)
     : QWidget{parent}
 {
+//window
+    Game_window* game_window = new Game_window();
+
     setWindowTitle("Арена");
-    setFixedSize(650, 500);
+    setFixedSize(650, 550);
+
+//array
+    person_men = {QPixmap(":/pixmap/pixmap/men1.bmp"),
+                  QPixmap(":/pixmap/pixmap/men2.bmp")
+                  };
+
+    person_women = {QPixmap(":/pixmap/pixmap/women1.bmp"),
+                    QPixmap(":/pixmap/pixmap/women2.bmp")
+                    };
+
+    str_sex = "Мужчина";
 
 //портрет и имя
     help = new QLabel();
@@ -16,15 +28,31 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
 
     //portrait
     player_portrait = new QLabel();
+    player_portrait->setPixmap(person_men[0].scaled(160, 150));
+
+
+
+    //:/pixmap/pixmap/men1.bmp
+    //:/pixmap/pixmap/men2.bmp
+    //:/pixmap/pixmap/women1.bmp
+    //:/pixmap/pixmap/women2.bmp
+
 
     //buttons for portrait
     QPushButton* right = new QPushButton(">");
     QPushButton* left = new QPushButton("<");
 
+    connect(right, SIGNAL(clicked()), SLOT(portrait_slot()));
+    connect(left, SIGNAL(clicked()), SLOT(portrait_slot()));
+
+
     //sex
-    men = new QRadioButton("&Мужчина");
-    women = new QRadioButton("&Женщина");
+    men = new QRadioButton("Мужчина");
+    women = new QRadioButton("Женщина");
     men->setChecked(true);
+
+    connect(men, SIGNAL(clicked()), SLOT(sex_slot()));
+    connect(women, SIGNAL(clicked()), SLOT(sex_slot()));
 
     //name
     player_name = new QLineEdit();
@@ -37,12 +65,29 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
                 player->name = player_name->text();
             });
 
-//button
+//button  -------------------------------------------------------
     QPushButton* start = new QPushButton("Старт");
     QPushButton* quit = new QPushButton("Выход");
 
     //connect
-    connect(start, SIGNAL(clicked()), SLOT(start_slot()));
+    connect(start, &QPushButton::clicked, [this, game_window]()
+            {
+                QString str = player_name->text();
+                if (str != "" && parameters_point == 0)
+                {
+                    game_window->start_game_slot();
+                    this->close();
+                }
+                else if (str == "" || str[0] == " ")
+                {
+                    help->setText("Укажите имя персонажа!");
+                    info_widget("Укажите имя персонажа!");
+                }
+                else if (parameters_point != 0)
+                {
+                    info_widget("Распределите все очки характеристик!");
+                }
+            });
     connect(quit, SIGNAL(clicked()), qApp, SLOT(quit()));
 
 //Fond   ___________
@@ -81,6 +126,7 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     name_box->addLayout(sex_box);
     name_box->addSpacing(20);
     name_box->addWidget(player_name);
+    name_box->addSpacing(50);
 
     //portait box
     QHBoxLayout* main_portait_box = new QHBoxLayout();
@@ -140,18 +186,56 @@ void Character_creation_menu::start_menu_character_creation_slot()
     this->show();
 }
 
-void Character_creation_menu::start_slot()
+void Character_creation_menu::sex_slot()
 {
-    if (player_name->text() != "")
+    str_sex = ((QRadioButton*)sender())->text();
+
+    player->sex = str_sex;
+
+    if (str_sex == "Женщина")
     {
-        qDebug() << "start";
+        player_portrait->setPixmap(person_women[0].scaled(160, 150));
     }
     else
     {
-        help->setText("Укажите имя персонажа!");
-        info_widget("Укажите имя персонажа!");
+        player_portrait->setPixmap(person_men[0].scaled(160, 150));
+    }
+
+
+}
+
+void Character_creation_menu::portrait_slot()
+{
+    QString str = ((QPushButton*)sender())->text();
+
+    if (str == ">")
+    {
+        ++index_pixmap;
+    }
+    else
+    {
+        --index_pixmap;
+    }
+
+    if (index_pixmap >= person_men.size()
+        || index_pixmap >= person_women.size()
+        || index_pixmap < 0)
+    {
+        index_pixmap = 0;
+    }
+
+    if (str_sex == "Женщина")
+    {
+        player_portrait->setPixmap(person_women[index_pixmap].scaled(160, 150));
+    }
+    else
+    {
+        player_portrait->setPixmap(person_men[index_pixmap].scaled(160, 150));
     }
 }
+
+// Мужчина
+// Женщина
 
 
 

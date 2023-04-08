@@ -25,13 +25,15 @@ class Creature
 
     int level;
 
+    QString sex;
     QString name;
 
 
     Creature(int level, int power, int dexterity,
-             int endurance, int intelligence, int spirit, QString name);
+             int endurance, int intelligence, int spirit, QString sex, QString name);
 
     Creature();
+
 };
 
 

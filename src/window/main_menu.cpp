@@ -9,10 +9,10 @@ Main_menu::Main_menu(QWidget *parent)
     QHBoxLayout* ver_box = new QHBoxLayout();
     ver_box->addSpacing(550);
     ver_box->addWidget(version);
-
+    //ToDo
 //----------------------------------
 
-    //window
+//window
     Settings* settings_window = new Settings;
     Loading* loading_window = new Loading;
     Character_creation_menu* character_creation_window = new Character_creation_menu;
