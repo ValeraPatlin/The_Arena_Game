@@ -18,18 +18,22 @@
 #include "include/create_parameters.h"
 #include "include/widget_info.h"
 
-#include "game_window.h"
+#include "include/game_window/game_window.h"
 
 /*
  * Меню создания персонажа
  * и настроек мира
  */
 
-extern Player* player;
+//extern Player* player;//----------------------------------------------------
 
 class Character_creation_menu : public QWidget
 {
     Q_OBJECT
+
+    Player player;
+
+
 
     int parameters_point = 10;  //количество очков параметров
     int index_pixmap = 0;

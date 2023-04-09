@@ -13,9 +13,13 @@
 #include <QDebug>
 
 #include "include/creature/player.h"
+//extern Player* player;//---------------------------------------------------------
+/*
+ * Окно характеристик игрока
+ *
+*/
 
 
-extern Player* player;
 
 
 class Specifications_player : public QWidget
@@ -27,9 +31,17 @@ class Specifications_player : public QWidget
     QLabel* endurance;
     QLabel* intelligence;
     QLabel* spirit;
+
     QLabel* level;
+
     QLabel* sex;
     QLabel* name;
+
+    QLabel* portrait;
+
+
+
+
 
     /*
      * parameters
@@ -45,11 +57,15 @@ class Specifications_player : public QWidget
     QString str;
 
 public:
+
+    Player player;
+
+
     explicit Specifications_player(QWidget *parent = nullptr);
 
 public slots:
     void open_spec_slot();
-    void update_param_slot();
+    void update_param_slot();   //обновление характеристик
 
 
 };

@@ -31,6 +31,12 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     player_portrait->setPixmap(person_men[0].scaled(160, 150));
 
 
+    //game_window->player.portrait = person_men[0].scaled(160, 150);
+
+    //QPixmap buff(person_men[0].scaled(160, 150));
+
+
+
 
     //:/pixmap/pixmap/men1.bmp
     //:/pixmap/pixmap/men2.bmp
@@ -62,7 +68,7 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
 
     connect(player_name, &QLineEdit::textEdited, [this]()
             {
-                player->name = player_name->text();
+                player.name = player_name->text();
             });
 
 //button  -------------------------------------------------------
@@ -70,11 +76,17 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     QPushButton* quit = new QPushButton("Выход");
 
     //connect
-    connect(start, &QPushButton::clicked, [this, game_window]()
+    connect(start, &QPushButton::clicked, [this, game_window]()  //-----
             {
                 QString str = player_name->text();
                 if (str != "" && parameters_point == 0)
                 {
+                    game_window->player = this->player;
+
+                    game_window->player.portrait = *player_portrait->pixmap();
+
+                    //
+
                     game_window->start_game_slot();
                     this->close();
                 }
@@ -88,7 +100,13 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
                     info_widget("Распределите все очки характеристик!");
                 }
             });
-    connect(quit, SIGNAL(clicked()), qApp, SLOT(quit()));
+
+    // временно  ---------------------------------------------------------------------------------
+    connect(quit, &QPushButton::clicked, qApp, [this]()
+            {
+                //delete player;      //ToDo: заменить функцией выхода
+                qApp->quit();
+            });
 
 //Fond   ___________
     QFont font;
@@ -148,7 +166,7 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
      */
     QGroupBox* parameters_box = new QGroupBox("Параметры персонажа");
     parameters_box->setFont(font);  //font
-    parameters_box->setLayout(create_parameters(parameters_point));
+    parameters_box->setLayout(create_parameters(parameters_point, player));
 
     //навыки и умения
     QGroupBox* skills_box = new QGroupBox("Навыки персонажа");
@@ -190,7 +208,7 @@ void Character_creation_menu::sex_slot()
 {
     str_sex = ((QRadioButton*)sender())->text();
 
-    player->sex = str_sex;
+    player.sex = str_sex;
 
     if (str_sex == "Женщина")
     {
@@ -227,6 +245,10 @@ void Character_creation_menu::portrait_slot()
     if (str_sex == "Женщина")
     {
         player_portrait->setPixmap(person_women[index_pixmap].scaled(160, 150));
+
+        //player->portrait = person_women[index_pixmap].scaled(160, 150);
+
+        //player->portrait->setPixmap(person_women[index_pixmap].scaled(160, 150));
     }
     else
     {
@@ -236,6 +258,8 @@ void Character_creation_menu::portrait_slot()
 
 // Мужчина
 // Женщина
+
+//portrait
 
 
 

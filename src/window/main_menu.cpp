@@ -5,7 +5,7 @@ Main_menu::Main_menu(QWidget *parent)
 {
 //-------------------------------------
     //версия игры
-    QLabel* version = new QLabel("version 0.0.2.1");
+    QLabel* version = new QLabel("version 0.0.2.3");
     QHBoxLayout* ver_box = new QHBoxLayout();
     ver_box->addSpacing(550);
     ver_box->addWidget(version);

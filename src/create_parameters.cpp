@@ -1,6 +1,6 @@
 #include "include/create_parameters.h"
 
-QFormLayout *create_parameters(int &param_point)
+QFormLayout *create_parameters(int &param_point, Player& player)
 {
     QLabel* str_param_point = new QLabel;
     str_param_point->setNum(param_point);
@@ -8,15 +8,15 @@ QFormLayout *create_parameters(int &param_point)
     QFormLayout* form = new QFormLayout;
     form->addRow("Осталось очков:", str_param_point);
     form->addRow("Сила:", create_spin_box(str_param_point,
-                                              param_point, player->power));
+                                              param_point, player.power));
     form->addRow("Ловкость:", create_spin_box(str_param_point,
-                                                  param_point, player->dexterity));
+                                                  param_point, player.dexterity));
     form->addRow("Выносливость:", create_spin_box(str_param_point,
-                                                      param_point, player->endurance));
+                                                      param_point, player.endurance));
     form->addRow("Интелект:", create_spin_box(str_param_point,
-                                                  param_point, player->intelligence));
+                                                  param_point, player.intelligence));
     form->addRow("Дух:", create_spin_box(str_param_point,
-                                             param_point, player->spirit));
+                                             param_point, player.spirit));
     form->setSpacing(10);
 
     return form;
@@ -82,6 +82,6 @@ void label_param_point(QLabel *str_param_point, QSpinBox *spin_box, int &param_p
     param = spin_box->value();
 
     //test-------------------------------------------------------------------------------------
-    player->print();
+    //player.print();
 }
 

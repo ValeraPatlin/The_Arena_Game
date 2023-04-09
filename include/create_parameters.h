@@ -8,7 +8,7 @@
 #include <QFormLayout>
 
 #include "include/creature/player.h"
-
+//extern Player* player;//---------------------------------------------------
 /*
  * создание виджетов для параметров персонажа
  * и записи их в класс Player
@@ -19,9 +19,9 @@
  *
  */
 
-extern Player* player;
 
-QFormLayout* create_parameters(int& param_point);
+
+QFormLayout* create_parameters(int& param_point, Player& player);
 QHBoxLayout* create_spin_box(QLabel* str_param_point,
                              int& param_point, int& param);
 void label_param_point(QLabel* str_param_point,

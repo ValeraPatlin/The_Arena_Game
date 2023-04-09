@@ -11,11 +11,22 @@
 #include <QDebug>
 
 #include "specifications_player.h"
+#include "inventory.h"
+
+/*
+ * Главное окно игры
+ *
+*/
+
 
 class Game_window : public QWidget
 {
     Q_OBJECT
 public:
+
+    Player player;
+
+
     explicit Game_window(QWidget *parent = nullptr);
 
 public slots:

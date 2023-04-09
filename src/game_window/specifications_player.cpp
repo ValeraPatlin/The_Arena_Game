@@ -1,4 +1,4 @@
-#include "specifications_player.h"
+#include "include/game_window/specifications_player.h"
 
 Specifications_player::Specifications_player(QWidget *parent)
     : QWidget{parent}
@@ -14,6 +14,9 @@ Specifications_player::Specifications_player(QWidget *parent)
     level = new QLabel("уровень: ");
     sex = new QLabel("пол: ");
     name = new QLabel("имя: ");
+
+    portrait = new QLabel();
+
 
 //Font
     QFont font;
@@ -42,6 +45,9 @@ Specifications_player::Specifications_player(QWidget *parent)
     //
     QVBoxLayout* name_box = new QVBoxLayout();
     QHBoxLayout* h_box = new QHBoxLayout();
+
+    h_box->addWidget(portrait);
+
     h_box->addWidget(name);
     h_box->addWidget(sex);
 
@@ -84,16 +90,19 @@ void Specifications_player::open_spec_slot()
     this->show();
 }
 
+//обновление характеристик
 void Specifications_player::update_param_slot()
 {
-    power->setText(power->text() + str.setNum(player->power));
-    dexterity->setText(dexterity->text() + str.setNum(player->dexterity));
-    endurance->setText(endurance->text() + str.setNum(player->endurance));
-    intelligence->setText(intelligence->text() + str.setNum(player->intelligence));
-    spirit->setText(spirit->text() + str.setNum(player->spirit));
+    power->setText(power->text() + str.setNum(player.power));
+    dexterity->setText(dexterity->text() + str.setNum(player.dexterity));
+    endurance->setText(endurance->text() + str.setNum(player.endurance));
+    intelligence->setText(intelligence->text() + str.setNum(player.intelligence));
+    spirit->setText(spirit->text() + str.setNum(player.spirit));
 
-    level->setText(level->text() + str.setNum(player->level));
-    sex->setText(sex->text() + player->sex);
-    name->setText(name->text() + player->name);
+    level->setText(level->text() + str.setNum(player.level));
+    sex->setText(sex->text() + player.sex);
+    name->setText(name->text() + player.name);
+
+    portrait->setPixmap(player.portrait);
 }
 
