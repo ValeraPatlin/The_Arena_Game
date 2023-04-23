@@ -4,7 +4,14 @@ Specifications_player::Specifications_player(QWidget *parent)
     : QWidget{parent}
 {
     setWindowTitle("Характеристики");
-    setFixedSize(350, 400);
+
+
+
+    //setFixedSize(350, 400);  //настроить размер окна
+
+
+
+
 
     power = new QLabel("сила: ");
     dexterity = new QLabel("ловкость: ");
@@ -93,15 +100,15 @@ void Specifications_player::open_spec_slot()
 //обновление характеристик
 void Specifications_player::update_param_slot()
 {
-    power->setText(power->text() + str.setNum(player.power));
-    dexterity->setText(dexterity->text() + str.setNum(player.dexterity));
-    endurance->setText(endurance->text() + str.setNum(player.endurance));
-    intelligence->setText(intelligence->text() + str.setNum(player.intelligence));
-    spirit->setText(spirit->text() + str.setNum(player.spirit));
+    power->setText("сила: " + str.setNum(player.power));
+    dexterity->setText("ловкость: " + str.setNum(player.dexterity));
+    endurance->setText("выносливость: " + str.setNum(player.endurance));
+    intelligence->setText("интелект: " + str.setNum(player.intelligence));
+    spirit->setText("дух: " + str.setNum(player.spirit));
 
-    level->setText(level->text() + str.setNum(player.level));
-    sex->setText(sex->text() + player.sex);
-    name->setText(name->text() + player.name);
+    level->setText("уровень: " + str.setNum(player.level));
+    sex->setText("Пол: " + player.sex);
+    name->setText("Имя: " + player.name);
 
     portrait->setPixmap(player.portrait);
 }

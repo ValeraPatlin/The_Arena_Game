@@ -11,6 +11,8 @@
 #include <QFormLayout>
 #include <QString>
 #include <QPixmap>
+#include <QProgressBar>
+#include <QMenu>
 #include <vector>
 
 #include "include/window/settings.h"    //???
@@ -51,6 +53,7 @@ class Character_creation_menu : public QWidget
     //sex
     QRadioButton* men;
     QRadioButton* women;
+
 
 public:
     explicit Character_creation_menu(QWidget *parent = nullptr);

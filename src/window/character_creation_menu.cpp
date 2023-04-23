@@ -20,18 +20,22 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
                     QPixmap(":/pixmap/pixmap/women2.bmp")
                     };
 
-    str_sex = "Мужчина";
+    str_sex = "Мужчина";    //параметр по умолчанию
 
 //портрет и имя
     help = new QLabel();
-    help->setText("Укажите пол и имя персонажа");
+    help->setText("Укажите расу, пол и имя персонажа");
 
     //portrait
     player_portrait = new QLabel();
     player_portrait->setPixmap(person_men[0].scaled(160, 150));
 
 
+
+    //тест  -------------------------------------------------------------------------
+    //принудительно задать портрет для теста
     //game_window->player.portrait = person_men[0].scaled(160, 150);
+
 
     //QPixmap buff(person_men[0].scaled(160, 150));
 
@@ -50,6 +54,24 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
 
     connect(right, SIGNAL(clicked()), SLOT(portrait_slot()));
     connect(left, SIGNAL(clicked()), SLOT(portrait_slot()));
+
+
+
+
+    //раса
+    QPushButton* species = new QPushButton("Раса");
+    QMenu* menu_species = new QMenu(species);
+
+    menu_species->addAction("Люди");
+    menu_species->addAction("Эльфы");
+
+    species->setMenu(menu_species);
+
+    //ToDo: доделать расу
+    //установить в классе эту характеристику
+
+
+
 
 
     //sex
@@ -71,6 +93,7 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
                 player.name = player_name->text();
             });
 
+
 //button  -------------------------------------------------------
     QPushButton* start = new QPushButton("Старт");
     QPushButton* quit = new QPushButton("Выход");
@@ -84,8 +107,6 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
                     game_window->player = this->player;
 
                     game_window->player.portrait = *player_portrait->pixmap();
-
-                    //
 
                     game_window->start_game_slot();
                     this->close();
@@ -104,7 +125,11 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     // временно  ---------------------------------------------------------------------------------
     connect(quit, &QPushButton::clicked, qApp, [this]()
             {
+
+
                 //delete player;      //ToDo: заменить функцией выхода
+
+
                 qApp->quit();
             });
 
@@ -130,7 +155,7 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     portait_button->addWidget(left);
     portait_button->addWidget(right);
 
-    QVBoxLayout* portait = new QVBoxLayout();
+    QVBoxLayout* portait = new QVBoxLayout();   //портрет персонажа
     portait->addWidget(player_portrait);
     portait->addLayout(portait_button);
 
@@ -139,19 +164,30 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     sex_box->addWidget(men);
     sex_box->addWidget(women);
 
+    //раса
+    QHBoxLayout* species_box = new QHBoxLayout();
+    species_box->addSpacing(80);
+    species_box->addWidget(species);
+    species_box->addSpacing(100);
+
+    //
     QVBoxLayout* name_box = new QVBoxLayout();
     name_box->addWidget(help);
+    name_box->addLayout(species_box);
     name_box->addLayout(sex_box);
     name_box->addSpacing(20);
     name_box->addWidget(player_name);
     name_box->addSpacing(50);
 
-    //portait box
+
+    // main portait box
     QHBoxLayout* main_portait_box = new QHBoxLayout();
     main_portait_box->addLayout(portait);
     main_portait_box->addLayout(name_box);
+    main_portait_box->addWidget(player.progreess_box()); //индикаторы
 
     portrait_box->setLayout(main_portait_box);
+
 
 //параметры персонажа ----------------
     /*

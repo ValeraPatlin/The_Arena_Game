@@ -7,16 +7,22 @@ QFormLayout *create_parameters(int &param_point, Player& player)
 
     QFormLayout* form = new QFormLayout;
     form->addRow("Осталось очков:", str_param_point);
+
     form->addRow("Сила:", create_spin_box(str_param_point,
                                               param_point, player.power));
+
     form->addRow("Ловкость:", create_spin_box(str_param_point,
                                                   param_point, player.dexterity));
+
     form->addRow("Выносливость:", create_spin_box(str_param_point,
                                                       param_point, player.endurance));
+
     form->addRow("Интелект:", create_spin_box(str_param_point,
                                                   param_point, player.intelligence));
+
     form->addRow("Дух:", create_spin_box(str_param_point,
                                              param_point, player.spirit));
+
     form->setSpacing(10);
 
     return form;
@@ -85,3 +91,25 @@ void label_param_point(QLabel *str_param_point, QSpinBox *spin_box, int &param_p
     //player.print();
 }
 
+
+QGroupBox *progreess_box()
+{
+    //индикаторы   -----------------------------------------------------------------------
+    QProgressBar* hp_bar = new QProgressBar();
+    QProgressBar* mana_bar = new QProgressBar();
+    QProgressBar* endurance_bar = new QProgressBar();
+
+
+    QGroupBox* progreess_box = new QGroupBox();
+    QVBoxLayout* prog_box = new QVBoxLayout();
+    prog_box->addWidget(hp_bar);
+    prog_box->addWidget(mana_bar);
+    prog_box->addWidget(endurance_bar);
+
+
+    //conneckt
+    //conneckt(hp_bar, )
+
+
+    return progreess_box;
+}
