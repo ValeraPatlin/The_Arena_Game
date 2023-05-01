@@ -13,14 +13,15 @@
 #include <QPixmap>
 #include <QProgressBar>
 #include <QMenu>
+#include <QFileDialog>
+#include <QRadioButton>
 #include <vector>
 
 #include "include/window/settings.h"    //???
 
-#include "include/create_parameters.h"
-#include "include/widget_info.h"
 
-#include "include/game_window/game_window.h"
+#include "include/parameters_bar.h"
+#include "include/parameters_list.h"
 
 /*
  * Меню создания персонажа
@@ -34,6 +35,15 @@ class Character_creation_menu : public QWidget
     Q_OBJECT
 
     Player player;
+
+    Parameters_bar param_bar;
+    Parameters_list param_list;
+
+
+    // изменить возхможно!!
+    int total_money = 1000;   //количество денег у персонажа
+    //выбрано ли оружие и одежда
+    bool weapon_selected = false, clothes_selected = false;
 
 
 

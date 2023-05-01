@@ -5,6 +5,8 @@
 class Player : public Creature
 {
 public:
+    int money = 1000;
+
     Player();
 
     void print();

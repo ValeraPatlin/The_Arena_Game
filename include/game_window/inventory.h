@@ -1,5 +1,4 @@
-#ifndef INVENTORY_H
-#define INVENTORY_H
+#pragma once
 
 #include <QApplication>
 #include <QWidget>
@@ -32,4 +31,3 @@ public slots:
 
 };
 
-#endif // INVENTORY_H

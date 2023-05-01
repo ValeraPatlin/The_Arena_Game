@@ -1,5 +1,4 @@
-#ifndef GAME_WINDOW_H
-#define GAME_WINDOW_H
+#pragma once
 
 #include <QApplication>
 #include <QWidget>
@@ -34,4 +33,3 @@ public slots:
 
 };
 
-#endif // GAME_WINDOW_H

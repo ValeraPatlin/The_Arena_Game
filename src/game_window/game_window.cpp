@@ -19,17 +19,11 @@ Game_window::Game_window(QWidget *parent)
             {
                 spec_player->player = this->player;
 
-
-
                 // установка портрета
                 spec_player->player.portrait = this->player.portrait;
 
-
-
-
-
+                //обновление на экране параметров персонажа
                 spec_player->open_spec_slot();
-
                 spec_player->update_param_slot();
             });
 

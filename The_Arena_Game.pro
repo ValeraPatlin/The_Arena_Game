@@ -9,6 +9,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/parameters_list.cpp \
+    src/parameters_bar.cpp \
     src/game_window/game_window.cpp \
     src/game_window/inventory.cpp \
     src/game_window/specifications_player.cpp \
@@ -35,7 +37,9 @@ HEADERS += \
     include/creature/player.h \
     include/widget_info.h \
     include/game_window/inventory.h \
-    include/game_window/specifications_player.h
+    include/game_window/specifications_player.h \
+    include/parameters_bar.h \
+    include/parameters_list.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

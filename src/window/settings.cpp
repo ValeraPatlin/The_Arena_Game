@@ -68,7 +68,6 @@ void Settings::language_slot()
     if (str == "&рус")
     {
         language_selection->setTitle("Выбор языка");
-
     }
     else
     {

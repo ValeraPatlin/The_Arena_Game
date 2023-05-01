@@ -1,5 +1,4 @@
-#ifndef SPECIFICATIONS_PLAYER_H
-#define SPECIFICATIONS_PLAYER_H
+#pragma once
 
 #include <QApplication>
 #include <QWidget>
@@ -13,6 +12,11 @@
 #include <QDebug>
 
 #include "include/creature/player.h"
+
+
+#include "include/create_parameters.h"
+
+
 //extern Player* player;//---------------------------------------------------------
 /*
  * Окно характеристик игрока
@@ -21,40 +25,24 @@
 
 
 
+//--------------------------------------------------------
+#include "include/parameters_list.h"
+
+
+
+
+
 
 class Specifications_player : public QWidget
 {
     Q_OBJECT
-
-    QLabel* power;
-    QLabel* dexterity;
-    QLabel* endurance;
-    QLabel* intelligence;
-    QLabel* spirit;
-
-    QLabel* level;
 
     QLabel* sex;
     QLabel* name;
 
     QLabel* portrait;
 
-
-
-
-
-    /*
-     * parameters
-     *
-     * power        - сила
-     QLabel* dexterity    - ловкость
-     QLabel* endurance    - выносливость
-     QLabel* intelligence - интелект
-     QLabel* spirit       - дух
-     *
-     */
-
-    QString str;
+    Parameters_list param_list;
 
 public:
 
@@ -70,4 +58,4 @@ public slots:
 
 };
 
-#endif // SPECIFICATIONS_PLAYER_H
+

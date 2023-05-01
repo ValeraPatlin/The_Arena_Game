@@ -5,20 +5,9 @@ Specifications_player::Specifications_player(QWidget *parent)
 {
     setWindowTitle("Характеристики");
 
-
-
     //setFixedSize(350, 400);  //настроить размер окна
 
 
-
-
-
-    power = new QLabel("сила: ");
-    dexterity = new QLabel("ловкость: ");
-    endurance = new QLabel("выносливость: ");
-    intelligence = new QLabel("интелект: ");
-    spirit = new QLabel("дух: ");
-    level = new QLabel("уровень: ");
     sex = new QLabel("пол: ");
     name = new QLabel("имя: ");
 
@@ -28,25 +17,9 @@ Specifications_player::Specifications_player(QWidget *parent)
 //Font
     QFont font;
     font.setPixelSize(16);
-    power->setFont(font);
-    dexterity->setFont(font);
-    endurance->setFont(font);
-    intelligence->setFont(font);
-    spirit->setFont(font);
-    level->setFont(font);
+
     sex->setFont(font);
     name->setFont(font);
-
-    /*
-     * parameters
-     *
-     * power        - сила
-     * dexterity    - ловкость
-     * endurance    - выносливость
-     * intelligence - интелект
-     * spirit       - дух
-     *
-    */
 
 //layout setup
     //
@@ -59,36 +32,22 @@ Specifications_player::Specifications_player(QWidget *parent)
     h_box->addWidget(sex);
 
     name_box->addLayout(h_box);
-    name_box->addWidget(level);
 
-    //
-    QGroupBox* param = new QGroupBox("Параметры:");
-    QVBoxLayout* param_box = new QVBoxLayout();
-    param_box->addWidget(power);
-    param_box->addWidget(dexterity);
-    param_box->addWidget(endurance);
-    param_box->addWidget(intelligence);
-    param_box->addWidget(spirit);
-
-    param->setFont(font);
-    param->setLayout(param_box);
-
-    //
     QGroupBox* skills_box = new QGroupBox("Навыки персонажа");
+    //навыка добавить----------------------------------------------------------
 
     QHBoxLayout* group_box = new QHBoxLayout();
-    group_box->addWidget(param);
+    group_box->addWidget(param_list.param_list(player));
+
     group_box->addWidget(skills_box);
+
+
 
     QVBoxLayout* main_layout = new QVBoxLayout(this);
     main_layout->addLayout(name_box);
     main_layout->addSpacing(10);
     main_layout->addLayout(group_box);
     main_layout->addSpacing(10);
-
-
-
-
 
 }
 
@@ -97,16 +56,14 @@ void Specifications_player::open_spec_slot()
     this->show();
 }
 
+
+
+
 //обновление характеристик
 void Specifications_player::update_param_slot()
 {
-    power->setText("сила: " + str.setNum(player.power));
-    dexterity->setText("ловкость: " + str.setNum(player.dexterity));
-    endurance->setText("выносливость: " + str.setNum(player.endurance));
-    intelligence->setText("интелект: " + str.setNum(player.intelligence));
-    spirit->setText("дух: " + str.setNum(player.spirit));
+    param_list.create_parameters_list(player);
 
-    level->setText("уровень: " + str.setNum(player.level));
     sex->setText("Пол: " + player.sex);
     name->setText("Имя: " + player.name);
 

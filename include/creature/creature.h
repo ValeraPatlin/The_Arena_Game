@@ -3,13 +3,6 @@
 #include <QGuiApplication>
 #include <QString>
 #include <QPixmap>
-#include <QProgressBar>
-#include <QGroupBox>
-#include <QBoxLayout>
-#include <QString>
-
-
-#include <QImage>
 
 
 class Creature
@@ -25,7 +18,25 @@ class Creature
      * intelligence - интелект
      * spirit       - дух
      *
+     *---------------------
+     * физ. защита  physical protection
+     * маг. защита  magical protection
+     *
+     * физ. атака   physical attack
+     * маг. атака   magic attack
+     *
+     * ---------------------
+     *
+     * hp_bar           - жизни         (50)
+     * mana_bar         - мана          (10)
+     * endurance_bar    - выносливость  (20)
+     *
+     * жизни
+     * мана
+     * стамина (энергия для удара)  - stamina
+     *
      */
+    int level;
 
     int power;
     int dexterity;
@@ -33,48 +44,26 @@ class Creature
     int intelligence;
     int spirit;
 
-    int level;
+    //---------------------------
+    //расчитываемые параметры
+    int hp = 50;
+    int mana = 10;
+    int stamina = 20;
+
+    int physical_protection = 0;
+    int magical_protection = 0;
+
+    int physical_attack = 0;
+    int magical_attack = 0;
+
+    //------------------------------
 
     QString sex;
     QString name;
 
     QString species;  //раса
 
-    QPixmap portrait;
-
-
-
-
-/*
- * создание виджета для индикаторов
-
- * hp_bar           - жизни
- * mana_bar         - мана
- * endurance_bar    - выносливость
- *
- * Функция progreess_box() устанавливает индикаторы
- * для основных параметров
- *
- *          // Может всё в отдельный класс???   -----------------------------------------
- *          // надо подумать
- */
-    //индикаторы
-    QProgressBar* hp_bar;
-    QProgressBar* mana_bar;
-    QProgressBar* endurance_bar;
-
-    //установка стилей
-    void hp_bar_style();
-    void mana_bar_style();
-    void endurance_bar_stylea();
-
-    QGroupBox *progreess_box();
-
-    QProgressBar* create_prog_bar(QProgressBar* prog_bar, int min, int max);
-
-    //функция расчёта характеристик
-
-
+    QPixmap portrait;   //портрет
 
 //---------
 

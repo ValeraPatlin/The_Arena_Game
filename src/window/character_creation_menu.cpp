@@ -1,5 +1,10 @@
 #include "include/window/character_creation_menu.h"
 
+#include "include/create_parameters.h"
+#include "include/widget_info.h"
+
+#include "include/game_window/game_window.h"
+
 #include <QDebug>
 
 Character_creation_menu::Character_creation_menu(QWidget *parent)
@@ -9,7 +14,7 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     Game_window* game_window = new Game_window();
 
     setWindowTitle("Арена");
-    setFixedSize(650, 550);
+    setFixedSize(1550, 720);
 
 //array
     person_men = {QPixmap(":/pixmap/pixmap/men1.bmp"),
@@ -29,7 +34,7 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     //portrait
     player_portrait = new QLabel();
     player_portrait->setPixmap(person_men[0].scaled(160, 150));
-
+    //установка первоночального портрета
 
 
     //тест  -------------------------------------------------------------------------
@@ -54,6 +59,21 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
 
     connect(right, SIGNAL(clicked()), SLOT(portrait_slot()));
     connect(left, SIGNAL(clicked()), SLOT(portrait_slot()));
+
+    //выбор своего портрета
+    QPushButton* open_portrait = new QPushButton("Свой вариант");
+
+    connect(open_portrait, &QPushButton::clicked, [this]()
+            {
+                QString str_file = QFileDialog::getOpenFileName(
+                        this,
+                        "Выбор изображения", "../",
+                        "All (*);;Images (*.bmp *.jpg *.jpeg *.png)"
+                        );
+
+                QPixmap buffer(str_file);
+                player_portrait->setPixmap(buffer.scaled(160, 150));
+            });
 
 
 
@@ -97,12 +117,14 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
 //button  -------------------------------------------------------
     QPushButton* start = new QPushButton("Старт");
     QPushButton* quit = new QPushButton("Выход");
+    QPushButton* world_settings = new QPushButton("Настройки мира");
 
     //connect
     connect(start, &QPushButton::clicked, [this, game_window]()  //-----
             {
                 QString str = player_name->text();
-                if (str != "" && parameters_point == 0)
+                if (str != "" && parameters_point == 0
+                    && weapon_selected && clothes_selected)
                 {
                     game_window->player = this->player;
 
@@ -120,6 +142,15 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
                 {
                     info_widget("Распределите все очки характеристик!");
                 }
+                else
+                {
+                    info_widget("Выберети оружие и одежду!");
+                }
+            });
+
+    connect(world_settings, &QPushButton::clicked, [this]()
+            {
+                //сделать настройки мира    --------------------------------------------------------------
             });
 
     // временно  ---------------------------------------------------------------------------------
@@ -138,8 +169,10 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     font.setPixelSize(16);
     start->setFont(font);
     quit->setFont(font);
+    world_settings->setFont(font);
     right->setFont(font);
     left->setFont(font);
+    open_portrait->setFont(font);
     men->setFont(font);
     women->setFont(font);
     player_name->setFont(font);
@@ -158,6 +191,7 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     QVBoxLayout* portait = new QVBoxLayout();   //портрет персонажа
     portait->addWidget(player_portrait);
     portait->addLayout(portait_button);
+    portait->addWidget(open_portrait);
 
     //name and sex
     QHBoxLayout* sex_box = new QHBoxLayout();
@@ -169,6 +203,105 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     species_box->addSpacing(80);
     species_box->addWidget(species);
     species_box->addSpacing(100);
+
+
+
+
+
+
+
+    //ToDo: создать отделный класс
+    // выбор предмета в инвентаре  --------------------------------------------------------------------
+    QGroupBox* bag_box = new QGroupBox("Выбор экиперовки");
+    bag_box->setFont(font);  //font
+
+    QLabel* text_bag = new QLabel("Выберете экиперовку");
+    QLabel* money = new QLabel("Количество денег у персонажа: 1000 монет");
+    money->setToolTip("Количество денег у персонажа");  //-----------------------------------------------
+
+    QGroupBox* weapon_box = new QGroupBox("Оружие");
+
+    QRadioButton* rusty_sword = new QRadioButton("ржавый меч (-650)");
+    rusty_sword->setToolTip("урон 5");
+    QRadioButton* baton = new QRadioButton("дубина (0)");
+    baton->setToolTip("урон 1");
+    QRadioButton* stick = new QRadioButton("деревянный посох (-800)");
+    stick->setToolTip("урон 1");
+
+    QVBoxLayout* weapon_layout = new QVBoxLayout();
+    weapon_layout->addWidget(rusty_sword);
+    weapon_layout->addWidget(baton);
+    weapon_layout->addWidget(stick);
+
+    weapon_box->setLayout(weapon_layout);
+
+    QGroupBox* clothes_box = new QGroupBox("Одежда");
+
+    QRadioButton* linen_clothing = new QRadioButton("льняная одежда (-100)");
+    QRadioButton* cloth_clothing = new QRadioButton("суконная одежда (-250)");
+    QRadioButton* canvas_clothing = new QRadioButton("холщовая одежда (-380)");
+
+    QVBoxLayout* clothes_layout = new QVBoxLayout();
+    clothes_layout->addWidget(linen_clothing);
+    clothes_layout->addWidget(cloth_clothing);
+    clothes_layout->addWidget(canvas_clothing);
+
+    clothes_box->setLayout(clothes_layout);
+
+    QGroupBox* left_hand_box = new QGroupBox("Левая рука");
+
+    QRadioButton* wooden_sewing = new QRadioButton("деревянный шит (-200)");
+    QRadioButton* torch = new QRadioButton("факел (-400)");
+    QRadioButton* rusty_knife = new QRadioButton("ржавый нож (-350)");
+    QRadioButton* left_hand_nothing = new QRadioButton("ничего");
+
+    QVBoxLayout* left_hand_layout = new QVBoxLayout();
+    left_hand_layout->addWidget(wooden_sewing);
+    left_hand_layout->addWidget(torch);
+    left_hand_layout->addWidget(rusty_knife);
+    left_hand_layout->addWidget(left_hand_nothing);
+
+    left_hand_box->setLayout(left_hand_layout);
+
+
+    QGroupBox* armor_box = new QGroupBox("Броня");
+
+    QRadioButton* gambeson = new QRadioButton("гамбезон (-800)");
+    QRadioButton* aketon = new QRadioButton("акетон (-900)");
+
+    //Гамбезон  gambeson
+    //акетон    aketon
+
+    QRadioButton* armor_nothing = new QRadioButton("ничего");
+
+    QVBoxLayout* armor_layout = new QVBoxLayout();
+    armor_layout->addWidget(gambeson);
+    armor_layout->addWidget(aketon);
+    armor_layout->addWidget(armor_nothing);
+
+    armor_box->setLayout(armor_layout);
+
+    QHBoxLayout* bag_layout = new QHBoxLayout();
+    bag_layout->addWidget(weapon_box);
+    bag_layout->addWidget(clothes_box);
+    bag_layout->addWidget(left_hand_box);
+    bag_layout->addWidget(armor_box);
+
+    QVBoxLayout* main_bag_layout = new QVBoxLayout();
+    main_bag_layout->addWidget(text_bag);
+    main_bag_layout->addWidget(money);
+    main_bag_layout->addLayout(bag_layout);
+
+    bag_box->setLayout(main_bag_layout);
+    //-----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
     //
     QVBoxLayout* name_box = new QVBoxLayout();
@@ -184,7 +317,8 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     QHBoxLayout* main_portait_box = new QHBoxLayout();
     main_portait_box->addLayout(portait);
     main_portait_box->addLayout(name_box);
-    main_portait_box->addWidget(player.progreess_box()); //индикаторы
+    main_portait_box->addWidget(bag_box);
+    main_portait_box->addWidget(param_bar.progreess_box()); //индикаторы
 
     portrait_box->setLayout(main_portait_box);
 
@@ -202,17 +336,32 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
      */
     QGroupBox* parameters_box = new QGroupBox("Параметры персонажа");
     parameters_box->setFont(font);  //font
-    parameters_box->setLayout(create_parameters(parameters_point, player));
 
+
+    // ToDo: доработать установку денег и передать в конец функции create_parameters -> true
+    // Уточнение: Возможно не надо!!!!
+    parameters_box->setLayout(create_parameters(parameters_point, player, param_list));
+
+
+
+    parameters_box->setMaximumWidth(250);
+
+
+
+    //надо изменить и удалить
     //навыки и умения
     QGroupBox* skills_box = new QGroupBox("Навыки персонажа");
 
     skills_box->setFont(font);  //font
 
+
+
+
     //паремметры и навыки
     QGroupBox* parem_skills_box = new QGroupBox("Парамметры и навыки");
     QHBoxLayout* group_box = new QHBoxLayout();
     group_box->addWidget(parameters_box);
+    group_box->addWidget(param_list.param_list(player));
     group_box->addWidget(skills_box);
 
     parem_skills_box->setFont(font);
@@ -222,6 +371,8 @@ Character_creation_menu::Character_creation_menu(QWidget *parent)
     QHBoxLayout* button_box = new QHBoxLayout();
     button_box->addSpacing(100);
     button_box->addWidget(start);
+    button_box->addSpacing(100);
+    button_box->addWidget(world_settings);
     button_box->addSpacing(100);
     button_box->addWidget(quit);
     button_box->addSpacing(100);
