@@ -9,37 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/parameters_list.cpp \
-    src/parameters_bar.cpp \
-    src/game_window/game_window.cpp \
-    src/game_window/inventory.cpp \
-    src/game_window/specifications_player.cpp \
-    src/create_parameters.cpp \
-    src/creature/player.cpp \
-    src/creature/creature.cpp \
-    src/window/character_creation_menu.cpp \
-    configuration.cpp \  #----------------------------------------------
-    src/window/loading.cpp \
-    src/window/main.cpp \
-    src/window/settings.cpp \
-    src/window/main_menu.cpp \
-    src/widget_info.cpp
+    creature.cpp \
+    form_game.cpp \
+    main.cpp \
+    main_window.cpp \
+    player.cpp
 
 HEADERS += \
-    include/game_window/game_window.h \
-    include/create_parameters.h \
-    include/creature/creature.h \
-    include/window/character_creation_menu.h \
-    configuration.h \  #----------------------------------------------------
-    include/window/main_menu.h \
-    include/window/settings.h \
-    include/window/loading.h \
-    include/creature/player.h \
-    include/widget_info.h \
-    include/game_window/inventory.h \
-    include/game_window/specifications_player.h \
-    include/parameters_bar.h \
-    include/parameters_list.h
+    creature.h \
+    form_game.h \
+    main_window.h \
+    player.h
+
+FORMS += \
+    form_game.ui \
+    main_window.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -47,5 +31,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    Icon_window.qrc \
-    pixmap.qrc
+    heroes.qrc

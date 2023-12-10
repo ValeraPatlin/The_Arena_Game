@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/pixmap">
-        <file>pixmap/men1.bmp</file>
-        <file>pixmap/men2.bmp</file>
-        <file>pixmap/women1.bmp</file>
-        <file>pixmap/women2.bmp</file>
-    </qresource>
-</RCC>

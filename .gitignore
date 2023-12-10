@@ -10,6 +10,8 @@
 *.dll
 *.dylib
 
+pixmap/r_pix/
+
 # Qt-es
 object_script.*.Release
 object_script.*.Debug
