@@ -16,18 +16,23 @@ Form_game::Form_game(QWidget *parent) :
     ui->le_name->setPlaceholderText("Введите имя");
 
 
-
     // --------------------------------------
     // Портрет
     portra_elf_men = {QPixmap(":/heroes/pixmap/heroes/e_m1.bmp"),
-                      QPixmap(":/heroes/pixmap/heroes/e_m2.bmp")};
+                      QPixmap(":/heroes/pixmap/heroes/e_m2.bmp"),
+                      QPixmap(":/heroes/pixmap/heroes/e_m3.bmp"),};
+
     portra_elf_women = {QPixmap(":/heroes/pixmap/heroes/e_w1.bmp"),
-                        QPixmap(":/heroes/pixmap/heroes/e_w2.bmp")};
+                        QPixmap(":/heroes/pixmap/heroes/e_w2.bmp"),
+                        QPixmap(":/heroes/pixmap/heroes/e_w3.bmp"),};
 
     portra_people_men = {QPixmap(":/heroes/pixmap/heroes/p_m1.bmp"),
-                         QPixmap(":/heroes/pixmap/heroes/p_m2.bmp")};
+                         QPixmap(":/heroes/pixmap/heroes/p_m2.bmp"),
+                         QPixmap(":/heroes/pixmap/heroes/p_m3.bmp"),};
+
     portra_people_women = {QPixmap(":/heroes/pixmap/heroes/p_w1.bmp"),
-                           QPixmap(":/heroes/pixmap/heroes/p_w2.bmp")};
+                           QPixmap(":/heroes/pixmap/heroes/p_w2.bmp"),
+                           QPixmap(":/heroes/pixmap/heroes/p_w3.bmp"),};
 
 
     ui->lb_player_portrait->setPixmap(portra_people_men.at(index_portra).scaled(230, 260));
@@ -64,7 +69,8 @@ Form_game::Form_game(QWidget *parent) :
 
     // --------------------------------------
     // Характеристики
-    ui->scroll_parameter->setMinimumWidth(200);
+    //ui->scroll_parameter->setMinimumWidth(100);
+    ui->gb_parameter->setFixedWidth(280);
 
     setting_initial_characteristics();
     // --------------------------------------
@@ -75,10 +81,17 @@ Form_game::Form_game(QWidget *parent) :
 
     // -------------------------------------
 
-    // -------------------------------------
-    // описание
+
 
     // -------------------------------------
+    // описание
+    QString str_description = ""; // может быть зделать загрузку описания всех характеристик из файла
+
+    ui->lb_description->setText(str_description);
+    // -------------------------------------
+
+
+
     // Распределение очков
     ui->sb_power->setButtonSymbols(QAbstractSpinBox::NoButtons);
     ui->sb_dexterity->setButtonSymbols(QAbstractSpinBox::NoButtons);
@@ -105,9 +118,10 @@ Form_game::~Form_game()
 }
 
 
-
+// переход к главному меню
 void Form_game::on_pd_mein_menu_clicked()
 {
+    main_window->setVisible(true);
     close();
 }
 
@@ -166,14 +180,24 @@ void Form_game::setting_initial_characteristics()
     ui->lb_evasion->setText(QString::number(player.evasion));
 
     // атака
-    ui->label_physical_attack->setText((QString::number(player.physical_attack)));
-    ui->label_magical_attack->setText((QString::number(player.magical_attack)));
+    ui->label_physical_attack->setText(QString::number(player.physical_attack));
+    ui->label_magical_attack->setText(QString::number(player.magical_attack));
+    ui->lb_chance_hit->setText(QString::number(player.chance_hit) + " %");     // шанс крит. удара
+    ui->lb_critical_hit->setText(QString::number(player.critical_hit) + " %"); // крит. удар
 
         // точность
     ui->lb_close_combat->setText(QString::number(player.close_combat));
     ui->lb_ranged_combat->setText(QString::number(player.ranged_combat));
+    //маг.атака
+    ui->lb_accuracy_magical_hit->setText(QString::number(player.accuracy_magical_hit) + " %");
 
     // пробивание брони
+    ui->lb_armor_pierc_close->setText(QString::number(player.armor_piercing_close) + " %");
+    ui->lb_armor_pierc_ranged->setText(QString::number(player.armor_piercing_ranged) + " %");
+    ui->lb_armor_pierc_magical->setText(QString::number(player.armor_piercing_magical) + " %");
+    // ближний бой
+    // дальний бой
+    // маг. атака
 }
 // --------------------------------------------------------------------
 
@@ -205,12 +229,42 @@ bool Form_game::minus_point_parameter()
     return false;
 }
 
-// методы для увеличения/уменьшения характеристик и бонусов
-    // power - сила (жизнь +2, сила +1, физ. атака +1)
-    // dexterity - ловкость (ловкость +1, защита: парирование +1, уклонение +1, точность: ближний бой +1, дальний бой +1)
-    // endurance - выносливость (жизнь +1, стамина +5, выносливость +1)
-    // intelligence - интелект (мана +2, интелект +1, маг. атака +1)
-    // spirit  - дух (мана +5, дух +1, маг. защита +1)
+/*
+ методы для увеличения/уменьшения характеристик и бонусов:
+    power - сила (жизнь +2, сила +1, физ. атака +1)
+
+    dexterity - ловкость (ловкость +1, защита: парирование +1, уклонение +1,
+        точность: ближний бой +1, дальний бой +1)
+
+    endurance - выносливость (жизнь +1, стамина +5, выносливость +1)
+
+    intelligence - интелект (мана +2, интелект +1, маг. атака +1)
+
+    spirit  - дух (мана +5, дух +1, маг. защита +1)
+
+
+    шанс критического удара - с каждым очком ловкости +0.5
+    критический удар - зависит от сылы, каждые очко силы +2 крит.удар
+
+
+    accuracy_magical_hit - точность маг. атака:
+        точность маг атаки увеличивается при помощи интелекта, (!!! в будущем еще и будут навыки !!!)
+        за первое очко, если до этого был ноль, дается +10
+        за последующие очки по 2
+
+
+    пробивание брани:
+    armor_piercing_close - ближний бой, Это шанс пробить броню и нанести дополнительный урон
+    первоночально равен 0.2 зависит от сылы, за каждое очко сылы увеличивается на 0.2
+
+    armor_piercing_ranged - дальний бой, зависит от ловкости +0.1
+        (!!! в будущем будет ещё зависит от оружия !!!)
+
+    armor_piercing_magical - маг. атака, зависит от интелекта +0.5,
+    первоночально равен нулю, за первое очко интелекта дается +2
+
+*/
+
 
     // сила (+/-)
 void Form_game::power_plus()
@@ -218,6 +272,8 @@ void Form_game::power_plus()
     player.hp += 2;
     player.power += 1;
     player.physical_attack += 1;
+    player.critical_hit = player.physical_attack + 2;   // крит.удар
+    player.armor_piercing_close += 0.2;     // пробивание брани ближний бой
 }
 
 void Form_game::power_minus()
@@ -225,6 +281,18 @@ void Form_game::power_minus()
     player.hp -= 2;
     player.power -= 1;
     player.physical_attack -= 1;
+
+    // расчет крит.удара
+    if (player.physical_attack == 1)
+    {
+        player.critical_hit = 2;
+    }
+    else
+    {
+        player.critical_hit = player.physical_attack + 2;
+    }
+
+    player.armor_piercing_close -= 0.2;     // пробивание брани ближний бой
 }
 
     // ловкость (+/-)
@@ -235,6 +303,7 @@ void Form_game::dexterity_plus()
     player.evasion += 1;    // уклонение
     player.close_combat += 1;   // ближний бой
     player.ranged_combat += 1;  // дальний бой
+    player.armor_piercing_ranged += 0.1;    // пробивание брани дальний бой
 }
 
 void Form_game::dexterity_minus()
@@ -244,6 +313,16 @@ void Form_game::dexterity_minus()
     player.evasion -= 1;    // уклонение
     player.close_combat -= 1;   // ближний бой
     player.ranged_combat -= 1;  // дальний бой
+
+    // пробивание брани дальний бой
+    if (player.dexterity == 0)  // что бы правельно считало
+    {
+        player.armor_piercing_ranged = 0;
+    }
+    else
+    {
+        player.armor_piercing_ranged -= 0.1;
+    }
 }
 
     // выносливость (+/-)
@@ -267,6 +346,26 @@ void Form_game::intelligence_plus()
     player.mana += 2;
     player.intelligence += 1;
     player.magical_attack += 1;
+
+    // расчет точности маг. атаки
+    if (player.intelligence == 1)
+    {
+        player.accuracy_magical_hit += 10;
+    }
+    else
+    {
+        player.accuracy_magical_hit += 2;
+    }
+
+    // расчет пробивание брони маг. атакой
+    if (player.intelligence == 1)
+    {
+        player.armor_piercing_magical += 2;
+    }
+    else
+    {
+        player.armor_piercing_magical += 0.5;
+    }
 }
 
 void Form_game::intelligence_minus()
@@ -274,6 +373,26 @@ void Form_game::intelligence_minus()
     player.mana -= 2;
     player.intelligence -= 1;
     player.magical_attack -= 1;
+
+    // расчет точности маг. атаки
+    if (player.intelligence == 0)
+    {
+        player.accuracy_magical_hit = 0;
+    }
+    else
+    {
+        player.accuracy_magical_hit -= 2;
+    }
+
+    // расчет пробивание брони маг. атакой
+    if (player.intelligence == 0)
+    {
+        player.armor_piercing_magical = 0;
+    }
+    else
+    {
+        player.armor_piercing_magical -= 0.5;
+    }
 }
 
     // дух (+/-)
@@ -398,6 +517,7 @@ void Form_game::on_pb_spirit_minus_clicked()
 }
 // -------------------------------------------------------------------------------------
 
+
 // -------------------------------------------------------------------------------------------
 // Выбор своевго файла для портрета персонажа
 void Form_game::on_pb_open_portrait_clicked()
@@ -412,6 +532,8 @@ void Form_game::on_pb_open_portrait_clicked()
     ui->lb_player_portrait->setPixmap(buffer.scaled(160, 150));
 }
 // ------------------------------------------------------------------------------------------
+
+
 
 // -------------------------------------------------------------------------------
 // выбор рассы
@@ -490,7 +612,7 @@ void Form_game::species_people_minus()
     // -----------------------------------------------------------------
 
     // здесь удаляются бонусы предыдущей рассы (и минусы тоже)
-    // это специально для добавления других расс (если рас будет юольше чем две)
+    // это специально для добавления других расс (если рас будет больше чем две)
 void Form_game::on_cb_species_textActivated(const QString &arg1)
 {
     if (species == "люди")
@@ -542,76 +664,61 @@ void Form_game::on_rb_women_clicked()
         ui->lb_player_portrait->setPixmap(portra_people_women.at(index_portra).scaled(230, 260));
     }
 }
+    // этот метод специально для кнопок вперёд и назад, так как код повторялся
+void Form_game::switching_portraits()
+{
+    if (ui->cb_species->currentText() == "эльфы")
+    {
+        if (ui->rb_men->isChecked())
+        {
+            ui->lb_player_portrait->setPixmap(portra_elf_men.at(index_portra).scaled(230, 260));
+        }
+        else
+        {
+            ui->lb_player_portrait->setPixmap(portra_elf_women.at(index_portra).scaled(230, 260));
+        }
+    }
+    else if (ui->cb_species->currentText() == "люди")
+    {
+        if (ui->rb_men->isChecked())
+        {
+            ui->lb_player_portrait->setPixmap(portra_people_men.at(index_portra).scaled(230, 260));
+        }
+        else
+        {
+            ui->lb_player_portrait->setPixmap(portra_people_women.at(index_portra).scaled(230, 260));
+        }
+    }
 
-void Form_game::on_pb_back_clicked()
+}
+
+void Form_game::on_pb_back_clicked()    // кнопка назад
 {
     --index_portra;
 
     if (index_portra < 0)
     {
-        index_portra = 1;
+        index_portra = MAX_NUMBER_ELEMET;
     }
 
-    if (ui->cb_species->currentText() == "эльфы")
-    {
-        if (ui->rb_men->isChecked())
-        {
-            ui->lb_player_portrait->setPixmap(portra_elf_men.at(index_portra).scaled(230, 260));
-        }
-        else
-        {
-            ui->lb_player_portrait->setPixmap(portra_elf_women.at(index_portra).scaled(230, 260));
-        }
-    }
-    else if (ui->cb_species->currentText() == "люди")
-    {
-        if (ui->rb_men->isChecked())
-        {
-            ui->lb_player_portrait->setPixmap(portra_people_men.at(index_portra).scaled(230, 260));
-        }
-        else
-        {
-            ui->lb_player_portrait->setPixmap(portra_people_women.at(index_portra).scaled(230, 260));
-        }
-    }
+    switching_portraits();
 }
 
-void Form_game::on_pb_forward_clicked()
+void Form_game::on_pb_forward_clicked() // кнопка вперёд
 {
     ++index_portra;
 
-    if (index_portra == 2 || index_portra < 0)
+    if (index_portra == MAX_COUNT_PORTRA || index_portra < 0)
     {
         index_portra = 0;
     }
 
-    if (index_portra == 2)
+    if (index_portra == MAX_COUNT_PORTRA)
     {
         index_portra = 0;
     }
 
-    if (ui->cb_species->currentText() == "эльфы")
-    {
-        if (ui->rb_men->isChecked())
-        {
-            ui->lb_player_portrait->setPixmap(portra_elf_men.at(index_portra).scaled(230, 260));
-        }
-        else
-        {
-            ui->lb_player_portrait->setPixmap(portra_elf_women.at(index_portra).scaled(230, 260));
-        }
-    }
-    else if (ui->cb_species->currentText() == "люди")
-    {
-        if (ui->rb_men->isChecked())
-        {
-            ui->lb_player_portrait->setPixmap(portra_people_men.at(index_portra).scaled(230, 260));
-        }
-        else
-        {
-            ui->lb_player_portrait->setPixmap(portra_people_women.at(index_portra).scaled(230, 260));
-        }
-    }
+    switching_portraits();
 }
 // --------------------------------------------------------------------
 

@@ -4,9 +4,13 @@
         <file>pixmap/heroes/e_m2.bmp</file>
         <file>pixmap/heroes/e_w1.bmp</file>
         <file>pixmap/heroes/e_w2.bmp</file>
-        <file>pixmap/heroes/p_m1.bmp</file>
         <file>pixmap/heroes/p_m2.bmp</file>
         <file>pixmap/heroes/p_w1.bmp</file>
         <file>pixmap/heroes/p_w2.bmp</file>
+        <file>pixmap/heroes/e_m3.bmp</file>
+        <file>pixmap/heroes/e_w3.bmp</file>
+        <file>pixmap/heroes/p_m1.bmp</file>
+        <file>pixmap/heroes/p_m3.bmp</file>
+        <file>pixmap/heroes/p_w3.bmp</file>
     </qresource>
 </RCC>

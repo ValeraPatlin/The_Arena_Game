@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1152</width>
+    <width>1097</width>
     <height>931</height>
    </rect>
   </property>
@@ -194,7 +194,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>321</width>
-                     <height>144</height>
+                     <height>142</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_22">
@@ -390,8 +390,8 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-35</y>
-          <width>534</width>
+          <y>-36</y>
+          <width>531</width>
           <height>462</height>
          </rect>
         </property>
@@ -843,32 +843,15 @@
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>556</width>
-                    <height>414</height>
+                    <width>327</width>
+                    <height>69</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_19">
                    <item>
                     <widget class="QLabel" name="lb_description">
                      <property name="text">
-                      <string>* power        - сила
-     * dexterity    - ловкость
-     * endurance    - выносливость
-     * intelligence - интелект
-     * spirit       - дух
-     *
-     *---------------------
-     * физ. защита  physical protection
-     * маг. защита  magical protection
-     *
-     * физ. атака   physical attack
-     * маг. атака   magic attack  
-
-   power        - сила          (жизнь +2, сила +1, физ. атака +1)
-     * dexterity    - ловкость      (ловкость +1, физ. защита +1)
-     * endurance    - выносливость  (жизнь +1, стамина +5, выносливость +1)
-     * intelligence - интелект      (мана +2, интелект +1, маг. атака +1)
-     * spirit       - дух           (мана +5, дух +1, маг. защита +1)</string>
+                      <string>---</string>
                      </property>
                     </widget>
                    </item>
@@ -883,7 +866,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_8">
+          <widget class="QGroupBox" name="gb_parameter">
            <property name="font">
             <font>
              <pointsize>12</pointsize>
@@ -901,8 +884,8 @@
               <widget class="QWidget" name="scrollAreaWidgetContents">
                <property name="geometry">
                 <rect>
-                 <x>-19</x>
-                 <y>-319</y>
+                 <x>-102</x>
+                 <y>-581</y>
                  <width>238</width>
                  <height>965</height>
                 </rect>
@@ -1332,13 +1315,23 @@
                      </item>
                      <item row="2" column="0">
                       <widget class="QLabel" name="label_47">
+                       <property name="font">
+                        <font>
+                         <pointsize>12</pointsize>
+                        </font>
+                       </property>
                        <property name="text">
                         <string>Шанс крит. удара</string>
                        </property>
                       </widget>
                      </item>
                      <item row="2" column="1">
-                      <widget class="QLabel" name="label_48">
+                      <widget class="QLabel" name="lb_chance_hit">
+                       <property name="font">
+                        <font>
+                         <pointsize>12</pointsize>
+                        </font>
+                       </property>
                        <property name="text">
                         <string>TextLabel</string>
                        </property>
@@ -1346,13 +1339,23 @@
                      </item>
                      <item row="3" column="0">
                       <widget class="QLabel" name="label_49">
+                       <property name="font">
+                        <font>
+                         <pointsize>12</pointsize>
+                        </font>
+                       </property>
                        <property name="text">
                         <string>Крит. удар</string>
                        </property>
                       </widget>
                      </item>
                      <item row="3" column="1">
-                      <widget class="QLabel" name="label_50">
+                      <widget class="QLabel" name="lb_critical_hit">
+                       <property name="font">
+                        <font>
+                         <pointsize>12</pointsize>
+                        </font>
+                       </property>
                        <property name="text">
                         <string>TextLabel</string>
                        </property>
@@ -1434,7 +1437,7 @@
                          </widget>
                         </item>
                         <item row="2" column="1">
-                         <widget class="QLabel" name="label_32">
+                         <widget class="QLabel" name="lb_accuracy_magical_hit">
                           <property name="font">
                            <font>
                             <pointsize>12</pointsize>
@@ -1476,7 +1479,7 @@
                          </widget>
                         </item>
                         <item row="0" column="1">
-                         <widget class="QLabel" name="label_34">
+                         <widget class="QLabel" name="lb_armor_pierc_close">
                           <property name="font">
                            <font>
                             <pointsize>12</pointsize>
@@ -1500,7 +1503,7 @@
                          </widget>
                         </item>
                         <item row="1" column="1">
-                         <widget class="QLabel" name="label_36">
+                         <widget class="QLabel" name="lb_armor_pierc_ranged">
                           <property name="font">
                            <font>
                             <pointsize>12</pointsize>
@@ -1524,7 +1527,7 @@
                          </widget>
                         </item>
                         <item row="2" column="1">
-                         <widget class="QLabel" name="label_38">
+                         <widget class="QLabel" name="lb_armor_pierc_magical">
                           <property name="font">
                            <font>
                             <pointsize>12</pointsize>
@@ -1575,8 +1578,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>551</width>
-             <height>386</height>
+             <width>524</width>
+             <height>368</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_23">
@@ -1620,7 +1623,7 @@
       <widget class="QPushButton" name="pd_mein_menu">
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <pointsize>15</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1632,7 +1635,7 @@
       <widget class="QPushButton" name="pushButton_5">
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <pointsize>15</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1644,7 +1647,7 @@
       <widget class="QPushButton" name="pb_start">
        <property name="font">
         <font>
-         <pointsize>16</pointsize>
+         <pointsize>17</pointsize>
          <bold>true</bold>
         </font>
        </property>

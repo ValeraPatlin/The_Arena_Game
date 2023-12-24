@@ -9,7 +9,12 @@ Main_Window::Main_Window(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->label_version->setText ("0.0.1");
+    //
+    form_game = new Form_game();
+    form_game->main_window = this;
+    //
+
+    ui->label_version->setText ("0.0.2");
 }
 
 Main_Window::~Main_Window()
@@ -20,8 +25,8 @@ Main_Window::~Main_Window()
 
 void Main_Window::on_pb_start_clicked()
 {
-    form_game = new Form_game();
     form_game->show();
+    this->setVisible(false);
 }
 
 void Main_Window::closeEvent(QCloseEvent *event)

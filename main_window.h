@@ -10,6 +10,8 @@
 
 #include <QDebug>
 
+class Form_game;
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class Main_Window; }
 QT_END_NAMESPACE

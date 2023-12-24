@@ -7,7 +7,10 @@
 #include <QString>
 #include <vector>
 #include "player.h"
+#include "main_window.h"
 #include <QDebug>
+
+class Main_Window;
 
 namespace Ui {
 class Form_game;
@@ -22,6 +25,10 @@ class Form_game : public QWidget
 
     bool plus_point_parameter();
     bool minus_point_parameter();
+
+    //
+    const int MAX_COUNT_PORTRA = 3;     // максимальное количество иконок массиве портретов
+    const int MAX_NUMBER_ELEMET = 2;    // максимальный номер элемента в массиве портретов
 
     // создание игрока
     Player player;
@@ -39,6 +46,8 @@ class Form_game : public QWidget
     std::vector<QPixmap> portra_people_women;
 
     int index_portra{};
+
+    void switching_portraits();
     // --------------------------------------------
 
 
@@ -82,6 +91,8 @@ public:
     explicit Form_game(QWidget *parent = nullptr);
     ~Form_game();
 
+    Main_Window* main_window;
+
 private slots:
 
     // ----------------------------------------------------------------
@@ -99,23 +110,25 @@ private slots:
     void on_pb_spirit_minus_clicked();
     // ----------------------------------------------------------------
 
-    void on_pb_open_portrait_clicked();
+    void on_pb_open_portrait_clicked(); // Выбор своевго файла для портрета персонажа
 
-    void on_cb_species_textActivated(const QString &arg1);
+    void on_cb_species_textActivated(const QString &arg1);  // удаление и добавление рассовых бонусов
 
-    void on_pb_save_player_clicked();
+    void on_pb_start_clicked(); // кнопка старт
 
-    void on_pb_start_clicked();
-
+    // ------------------------------------------------
+    // переключение портретов
     void on_rb_men_clicked();
-
     void on_rb_women_clicked();
-
     void on_pb_back_clicked();
-
     void on_pb_forward_clicked();
+    // -----------------------------------------------
 
+    // ----------------------------------------------
+    // загрузка персонажей
     void on_pb_loading_clicked();
+    void on_pb_save_player_clicked();
+    // ------------------------------------------------
 
 private:
     Ui::Form_game *ui;

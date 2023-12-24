@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     creature.cpp \
     form_game.cpp \
+    form_game_world.cpp \
     main.cpp \
     main_window.cpp \
     player.cpp
@@ -18,11 +19,13 @@ SOURCES += \
 HEADERS += \
     creature.h \
     form_game.h \
+    form_game_world.h \
     main_window.h \
     player.h
 
 FORMS += \
     form_game.ui \
+    form_game_world.ui \
     main_window.ui
 
 # Default rules for deployment.
